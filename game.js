@@ -282,26 +282,15 @@ function setup() {
 
 function previewCards() {
   state.locked = true;
-  const cards = board.querySelectorAll(".card");
 
   board.scrollIntoView({ behavior: "smooth", block: "start" });
+  board.classList.add("preview-mode");
+  showPreviewMessage(PREVIEW_DURATION);
 
-  // Força o browser a pintar o estado inicial (cartas viradas para trás)
-  // antes de adicionar .flipped, para a animação de virada acontecer
-  // visivelmente no início do preview.
-  void board.offsetHeight;
-
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      cards.forEach(c => c.classList.add("flipped", "preview"));
-      showPreviewMessage(PREVIEW_DURATION);
-
-      setTimeout(() => {
-        cards.forEach(c => c.classList.remove("flipped", "preview"));
-        setTimeout(() => { state.locked = false; }, 500);
-      }, PREVIEW_DURATION);
-    });
-  });
+  setTimeout(() => {
+    board.classList.remove("preview-mode");
+    setTimeout(() => { state.locked = false; }, 500);
+  }, PREVIEW_DURATION);
 }
 
 function showPreviewMessage(duration) {
