@@ -22,7 +22,7 @@ const DIFFICULTY = {
 };
 
 const TOAST_DURATION = 12000; // 12 segundos
-const PREVIEW_DURATION = 5000; // 5 segundos mostrando todas as cartas
+const PREVIEW_DURATION = 8000; // 8 segundos mostrando todas as cartas
 
 const state = {
   mode: "characters",
@@ -273,7 +273,9 @@ function setup() {
 
   const selected = shuffle(pool).slice(0, pairs);
   const deck = shuffle([...selected, ...selected]);
-  deck.forEach((item, i) => board.appendChild(createCard(item, i)));
+  const frag = document.createDocumentFragment();
+  deck.forEach((item, i) => frag.appendChild(createCard(item, i)));
+  board.appendChild(frag);
 
   previewCards();
 }
@@ -281,15 +283,25 @@ function setup() {
 function previewCards() {
   state.locked = true;
   const cards = board.querySelectorAll(".card");
-  cards.forEach(c => c.classList.add("flipped", "preview"));
 
   board.scrollIntoView({ behavior: "smooth", block: "start" });
-  showPreviewMessage(PREVIEW_DURATION);
 
-  setTimeout(() => {
-    cards.forEach(c => c.classList.remove("flipped", "preview"));
-    setTimeout(() => { state.locked = false; }, 500);
-  }, PREVIEW_DURATION);
+  // Força o browser a pintar o estado inicial (cartas viradas para trás)
+  // antes de adicionar .flipped, para a animação de virada acontecer
+  // visivelmente no início do preview.
+  void board.offsetHeight;
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      cards.forEach(c => c.classList.add("flipped", "preview"));
+      showPreviewMessage(PREVIEW_DURATION);
+
+      setTimeout(() => {
+        cards.forEach(c => c.classList.remove("flipped", "preview"));
+        setTimeout(() => { state.locked = false; }, 500);
+      }, PREVIEW_DURATION);
+    });
+  });
 }
 
 function showPreviewMessage(duration) {
