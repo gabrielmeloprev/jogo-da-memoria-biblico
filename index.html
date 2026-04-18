@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jogo da Memória - Personagens Bíblicos</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="background"></div>
+
+  <header class="topbar">
+    <h1>✝ Jogo da Memória Bíblico</h1>
+    <p class="subtitle">Encontre os pares e descubra curiosidades da Bíblia</p>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <div class="mode-tabs" role="tablist">
+        <button class="tab active" data-mode="characters" role="tab">👤 Personagens</button>
+        <button class="tab" data-mode="objects"    role="tab">⚔ Objetos</button>
+        <button class="tab" data-mode="cities"     role="tab">🏛 Cidades</button>
+        <button class="tab" data-mode="miracles"   role="tab">✨ Milagres</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat stat-lives" id="livesStat">
+          <span class="label">Vidas</span>
+          <span id="lives" class="value">❤ 10</span>
+        </div>
+        <div class="stat">
+          <span class="label">Jogadas</span>
+          <span id="moves" class="value">0</span>
+        </div>
+        <div class="stat">
+          <span class="label">Pares</span>
+          <span id="pairs" class="value">0 / 0</span>
+        </div>
+        <div class="stat">
+          <span class="label">Tempo</span>
+          <span id="timer" class="value">00:00</span>
+        </div>
+        <div class="stat">
+          <span class="label">Pontos</span>
+          <span id="score" class="value">0</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <label for="difficulty">Nível:</label>
+        <select id="difficulty">
+          <option value="easy">🟢 Fácil (8 pares)</option>
+          <option value="medium" selected>🟡 Médio (12 pares)</option>
+          <option value="hard">🟠 Difícil (16 pares)</option>
+          <option value="expert">🔴 Expert (20 pares)</option>
+          <option value="master">⚫ Mestre (24 pares)</option>
+        </select>
+        <button id="restart" class="btn-primary">🔄 Reiniciar</button>
+      </div>
+    </section>
+
+    <section id="board" class="board" aria-label="Tabuleiro do jogo"></section>
+  </main>
+
+  <!-- Toast de curiosidade -->
+  <div id="curiosityToast" class="curiosity-toast hidden" role="status">
+    <div class="toast-icon"></div>
+    <div class="toast-body">
+      <h3 id="toastTitle">—</h3>
+      <p id="toastText">—</p>
+    </div>
+    <button class="toast-close" aria-label="Fechar">×</button>
+  </div>
+
+  <!-- Modal de Game Over -->
+  <div id="gameOverModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content gameover">
+      <div class="crown">💔</div>
+      <h2>Fim de Jogo!</h2>
+      <p>Suas vidas acabaram. Não desista — tente novamente!</p>
+      <ul class="result">
+        <li>Modo: <strong id="goMode">—</strong></li>
+        <li>Nível: <strong id="goLevel">—</strong></li>
+        <li>Pares encontrados: <strong id="goPairs">0 / 0</strong></li>
+        <li>Tempo: <strong id="goTime">00:00</strong></li>
+      </ul>
+      <blockquote class="verse">
+        "Porque sete vezes cairá o justo, e se levantará." — Provérbios 24:16
+      </blockquote>
+      <button id="tryAgain" class="btn-primary">🔁 Tentar de Novo</button>
+    </div>
+  </div>
+
+  <!-- Modal de vitória -->
+  <div id="winModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <div class="crown">👑</div>
+      <h2>Parabéns!</h2>
+      <p>Você encontrou todos os pares!</p>
+      <ul class="result">
+        <li>Modo: <strong id="finalMode">—</strong></li>
+        <li>Nível: <strong id="finalLevel">—</strong></li>
+        <li>Jogadas: <strong id="finalMoves">0</strong></li>
+        <li>Tempo: <strong id="finalTime">00:00</strong></li>
+        <li>Pontuação: <strong id="finalScore">0</strong></li>
+      </ul>
+      <blockquote id="verse" class="verse"></blockquote>
+      <button id="playAgain" class="btn-primary">Jogar de Novo</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>"Lâmpada para os meus pés é a tua palavra, e luz para o meu caminho." — Salmos 119:105</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
