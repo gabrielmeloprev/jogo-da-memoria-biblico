@@ -541,6 +541,21 @@ html, body {
   to   { filter: brightness(1.15) drop-shadow(0 0 6px rgba(241,201,107,0.6)); }
 }
 
+/* Modo preview: mostra a frente de todas as cartas sem depender de rotacao 3D */
+.board.preview-mode .card {
+  transform: none !important;
+  animation: previewGlow 1.5s ease-in-out infinite alternate;
+}
+.board.preview-mode .card-back {
+  visibility: hidden;
+}
+.board.preview-mode .card-front {
+  transform: none !important;
+  visibility: visible;
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+}
+
 @media (max-width: 900px) {
   .stats { grid-template-columns: repeat(3, 1fr); }
   .board.grid-hard,
